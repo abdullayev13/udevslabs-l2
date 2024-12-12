@@ -1,0 +1,37 @@
+services:
+  udevslabs-mongodb:
+    image: mongo:latest
+    container_name: udevslabs-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/home/root/data
+
+  udevslabs-app-1:
+    depends_on:
+      - udevslabs-mongodb
+    build: .
+    environment:
+      - MONGODB_URI=mongodb://udevslabs-mongodb:27017/db
+
+  udevslabs-app-2:
+    depends_on:
+      - udevslabs-mongodb
+    build: .
+    environment:
+      - MONGODB_URI=mongodb://udevslabs-mongodb:27017/db
+
+  my-nginx:
+    image: nginx
+    container_name: my-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - udevslabs-app-1
+      - udevslabs-app-2
+
+
+volumes:
+  mongodb-data:
