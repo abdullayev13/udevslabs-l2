@@ -2,8 +2,6 @@ services:
   udevslabs-mongodb:
     image: mongo:latest
     container_name: udevslabs-mongodb
-    ports:
-      - "27017:27017"
     volumes:
       - mongodb-data:/home/root/data
 
@@ -26,6 +24,7 @@ services:
     container_name: my-nginx
     ports:
       - "80:80"
+      - "27017:27017"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
