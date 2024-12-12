@@ -3,7 +3,7 @@ services:
     image: mongo:latest
     container_name: udevslabs-mongodb
     volumes:
-      - mongodb-data:/home/root/data
+      - mongodb-data:/data/db
 
   udevslabs-app-1:
     depends_on:
@@ -22,7 +22,7 @@ services:
       - NAME=Server-2
 
   my-nginx:
-    image: nginx
+    image: nginx:alpine
     container_name: my-nginx
     ports:
       - "80:80"
